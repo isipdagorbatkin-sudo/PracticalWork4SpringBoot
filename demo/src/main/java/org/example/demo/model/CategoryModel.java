@@ -1,5 +1,6 @@
 package org.example.demo.model;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -9,6 +10,8 @@ public class CategoryModel {
     private int idCategory;
     private String name;
     private String description;
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    private List<MenuItemModel> menuItems;
 
     public CategoryModel() {}
 
@@ -24,4 +27,6 @@ public class CategoryModel {
     public void setName(String name) { this.name = name; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+    public List<MenuItemModel> getMenuItems() { return menuItems; }
+    public void setMenuItems(List<MenuItemModel> menuItems) { this.menuItems = menuItems; }
 }
