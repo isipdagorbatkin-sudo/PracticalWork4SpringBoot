@@ -31,15 +31,14 @@
     <label>Ссылка на изображение:
         <input type="text" th:field="*{imageUrl}">
     </label>
-    <label>Категория:
-        <select name="categoryId" required>
-            <option value="" disabled selected>Выберите категорию</option>
-            <option th:each="cat : ${categories}"
-                    th:value="${cat.idCategory}"
-                    th:text="${cat.name}">
-            </option>
-        </select>
-    </label>
+    <label for="categoryId">Категория:</label>
+    <select id="categoryId" name="categoryId" required>
+        <option value="" disabled selected>Выберите категорию</option>
+        <option th:each="cat : ${categories}"
+                th:value="${cat.idCategory}"
+                th:text="${cat.name}">
+        </option>
+    </select>
     <button type="submit">Сохранить</button>
 </form>
 <a href="/menuItems">Назад к списку</a>
