@@ -37,19 +37,21 @@ public class MenuItemController {
     }
 
     @GetMapping("/new")
-    public String showCreateForm(Model model, @RequestParam(required = false) String error) {
+    public String showCreateForm(Model model) {
         model.addAttribute("menuItem", new MenuItemModel());
         model.addAttribute("categories", categoryService.findAllCategories());
-        model.addAttribute("categoryError", "category".equals(error));
         return "menuItemForm";
     }
 
     @PostMapping
     public String saveMenuItem(@ModelAttribute("menuItem") MenuItemModel menuItem,
-                               @RequestParam("categoryId") int categoryId) {
+                               @RequestParam("categoryId") int categoryId,
+                               Model model) {
         CategoryModel category = categoryService.findById(categoryId);
         if (category == null) {
-            return "redirect:/menuItems/new?error=category";
+            model.addAttribute("categories", categoryService.findAllCategories());
+            model.addAttribute("categoryError", true);
+            return "menuItemForm";
         }
         menuItem.setCategory(category);
         service.saveMenuItem(menuItem);
