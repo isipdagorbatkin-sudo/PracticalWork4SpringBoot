@@ -15,7 +15,7 @@ public class MenuItemModel {
     private double price;
     private boolean isAvailable;
     private String imageUrl;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryModel category;
 

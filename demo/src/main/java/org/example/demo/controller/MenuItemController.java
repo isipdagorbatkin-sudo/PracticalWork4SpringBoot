@@ -51,6 +51,7 @@ public class MenuItemController {
         if (category == null) {
             model.addAttribute("categories", categoryService.findAllCategories());
             model.addAttribute("categoryError", true);
+            model.addAttribute("menuItem", menuItem);
             return "menuItemForm";
         }
         menuItem.setCategory(category);
