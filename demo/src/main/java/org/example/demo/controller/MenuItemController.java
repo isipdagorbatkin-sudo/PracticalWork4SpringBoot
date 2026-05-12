@@ -1,6 +1,8 @@
 package org.example.demo.controller;
 
+import org.example.demo.model.CategoryModel;
 import org.example.demo.model.MenuItemModel;
+import org.example.demo.service.CategoryService;
 import org.example.demo.service.MenuItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class MenuItemController {
 
     private final MenuItemService service;
+    private final CategoryService categoryService;
 
-    public MenuItemController(MenuItemService service) {
+    public MenuItemController(MenuItemService service, CategoryService categoryService) {
         this.service = service;
+        this.categoryService = categoryService;
     }
 
     @GetMapping
@@ -35,11 +39,15 @@ public class MenuItemController {
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("menuItem", new MenuItemModel());
+        model.addAttribute("categories", categoryService.findAllCategories());
         return "menuItemForm";
     }
 
     @PostMapping
-    public String saveMenuItem(@ModelAttribute("menuItem") MenuItemModel menuItem) {
+    public String saveMenuItem(@ModelAttribute("menuItem") MenuItemModel menuItem,
+                               @RequestParam("categoryId") int categoryId) {
+        CategoryModel category = categoryService.findById(categoryId);
+        menuItem.setCategory(category);
         service.saveMenuItem(menuItem);
         return "redirect:/menuItems";
     }

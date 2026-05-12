@@ -36,7 +36,7 @@
             <th>Описание</th>
             <th>Цена</th>
             <th>Доступно</th>
-            <th>ID Категории</th>
+            <th>Категория</th>
             <th>Действия</th>
         </tr>
         </thead>
@@ -47,7 +47,7 @@
             <td th:text="${item.description}"></td>
             <td th:text="${item.price}"></td>
             <td th:text="${item.available ? 'Да' : 'Нет'}"></td>
-            <td th:text="${item.categoryId}"></td>
+            <td th:text="${item.category != null ? item.category.name : '—'}"></td>
             <td>
                 <a th:href="@{/menuItems/delete/{id}(id=${item.idMenuItem})}">Удалить</a>
             </td>
