@@ -37,9 +37,10 @@ public class MenuItemController {
     }
 
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(Model model, @RequestParam(required = false) String error) {
         model.addAttribute("menuItem", new MenuItemModel());
         model.addAttribute("categories", categoryService.findAllCategories());
+        model.addAttribute("categoryError", "category".equals(error));
         return "menuItemForm";
     }
 
@@ -47,6 +48,9 @@ public class MenuItemController {
     public String saveMenuItem(@ModelAttribute("menuItem") MenuItemModel menuItem,
                                @RequestParam("categoryId") int categoryId) {
         CategoryModel category = categoryService.findById(categoryId);
+        if (category == null) {
+            return "redirect:/menuItems/new?error=category";
+        }
         menuItem.setCategory(category);
         service.saveMenuItem(menuItem);
         return "redirect:/menuItems";

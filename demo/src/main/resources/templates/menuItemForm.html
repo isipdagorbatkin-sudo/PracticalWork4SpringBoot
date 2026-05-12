@@ -14,6 +14,7 @@
 </head>
 <body>
 <h2>Добавить блюдо</h2>
+<p th:if="${categoryError}" style="color: #d32f2f;">Выберите существующую категорию.</p>
 <form action="/menuItems" method="post" th:object="${menuItem}">
     <label>Название:
         <input type="text" th:field="*{name}" required>
